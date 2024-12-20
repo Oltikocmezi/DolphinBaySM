@@ -1,4 +1,27 @@
-import prisma from "../lib/prisma.js";
+import jwt from "jsonwebtoken";
+import { registerService } from "../services/auth.service.js";
+
+export const register = async (req, res) => {
+  const { username, email, password } = req.body;
+
+  try {
+    const newUser = await registerService(username, email, password);
+    res.status(201).json(newUser);
+  } catch (err) {
+    console.error("Error creating user:", err.message);
+    res.status(500).json({ message: "Failed to create user!" });
+  }
+};
+
+export const login = (req, res) => {
+  //db operations
+  console.log("login controller");
+};
+
+export const logout = (req, res) => {
+  //db operations
+  console.log("logout controller");
+};
 
 // async function testConnection() {
 //   try {
@@ -13,18 +36,3 @@ import prisma from "../lib/prisma.js";
 // }
 
 // testConnection();
-
-export const register = (req, res) => {
-  //db operations
-  console.log("register controller");
-};
-
-export const login = (req, res) => {
-  //db operations
-  console.log("login controller");
-};
-
-export const logout = (req, res) => {
-  //db operations
-  console.log("logout controller");
-};
