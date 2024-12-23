@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { registerService, loginService } from "../services/auth.service.js";
+import { registerService, loginService , logoutService } from "../services/auth.service.js";
 
 export const register = async (req, res) => {
   const { username, email, password } = req.body;
@@ -28,9 +28,14 @@ export const login = async (req, res) => {
   }
 };
 
-export const logout = (req, res) => {
-  //db operations
-  console.log("logout controller");
+export const logout = async (req, res) => {
+  try {
+    const response = logoutService();
+    res.clearCookie("token").status(200).json(response);
+  } catch (err) {
+    console.error("Error during logout:", err.message);
+    res.status(500).json({ message: "Logout failed!" });
+  }
 };
 
 // async function testConnection() {

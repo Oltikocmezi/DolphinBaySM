@@ -29,3 +29,7 @@ export const loginService = async (email, password) => {
 };
 
 // Logout user
+export const logoutService = () => {
+  // Placeholder for logout logic
+  return { message: "User logged out" };
+};
