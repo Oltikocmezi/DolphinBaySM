@@ -8,3 +8,8 @@ export const createUser = async ({ username, email, password }) => {
 };
 
 // Find user by email
+export const findUserByEmail = async (email) => {
+  return await prisma.user.findUnique({
+    where: { email },
+  });
+};

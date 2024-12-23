@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { registerService } from "../services/auth.service.js";
+import { registerService, loginService } from "../services/auth.service.js";
 
 export const register = async (req, res) => {
   const { username, email, password } = req.body;
@@ -13,9 +13,19 @@ export const register = async (req, res) => {
   }
 };
 
-export const login = (req, res) => {
-  //db operations
-  console.log("login controller");
+export const login = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const { user, token } = await loginService(email, password);
+    res
+      .cookie("token", token, { httpOnly: true })
+      .status(200)
+      .json({ message: "Login successful", user });
+  } catch (err) {
+    console.error("Error during login:", err.message);
+    res.status(401).json({ message: "Login failed: " + err.message });
+  }
 };
 
 export const logout = (req, res) => {
