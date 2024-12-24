@@ -11,3 +11,11 @@ export const findUserById = async (id) => {
     where: { id },
   });
 };
+
+// Update a user
+export const updateUserById = async (id, data) => {
+  return await prisma.user.update({
+    where: { id },
+    data,
+  });
+};
